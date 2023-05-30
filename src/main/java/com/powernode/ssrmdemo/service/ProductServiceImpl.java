@@ -20,8 +20,6 @@ public class ProductServiceImpl implements ProductService{
         // 获取当前日期，格式化
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println("现在在service");
-        System.out.println(mapper.selectTurnover(sdf.format(date)));
         return mapper.selectTurnover(sdf.format(date));
     }
 

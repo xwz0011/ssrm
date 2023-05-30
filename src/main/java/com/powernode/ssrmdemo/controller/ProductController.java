@@ -19,7 +19,6 @@ public class ProductController {
     // 处理首页请求
     @GetMapping("/")
     public String indexHandle(Model model){
-        System.out.println("现在在controller");
         // 查询平台总交易额
         Double turnover = service.findTurnover();
         model.addAttribute("turnover", turnover);
