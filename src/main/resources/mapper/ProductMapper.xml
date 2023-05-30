@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powernode.ssmdemo.mapper.ProductMapper">
+
+    <insert id="insertProduct">
+        insert into product(name, rate, amount, raised, cycle, endTime)
+        values (#{name}, #{rate}, #{amount}, #{raised}, #{cycle}, #{endTime})
+    </insert>
+
+    <select id="selectTurnover" resultType="java.lang.Double">
+        select sum(raised) from product where endTime is not null and endTime &lt; #{date};
+    </select>
+
+    <select id="findAllProducts" resultType="com.powernode.ssmdemo.bean.Product">
+        select id,name, rate, amount, raised, cycle, endTime
+        from product
+    </select>
+
+    <select id="findProductsByName" resultType="com.powernode.ssmdemo.bean.Product">
+        select id, name, rate, amount, raised, cycle, endTime
+        from product
+        where name like "%"#{name}"%"
+    </select>
+
+</mapper>
