@@ -37,3 +37,4 @@ logging:
   level:
     root: warn
     com.powernode.ssmdemo.mapper: debug
+

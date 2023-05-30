@@ -33,14 +33,29 @@ public class ProductServiceImpl implements ProductService{
         BoundValueOperations<String, String> ops = rt.boundValueOps("turnover");
         // 从缓存中读取指定key的value
         String turnover = ops.get();
-        // 如果缓存中没有该数据，则先从DB中查询，然后再写入到缓存
+//        // 如果缓存中没有该数据，则先从DB中查询，然后再写入到缓存
+//        if (turnover == null) {
+//            Date date = new Date();
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            turnover = mapper.selectTurnover(sdf.format(date)).toString();
+//            // 将查询结果写入缓存
+//            ops.set(turnover, 10, TimeUnit.SECONDS);
+//        }
+
+        // 双重检测所预防缓存击穿问题
         if (turnover == null) {
-            Date date = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            turnover = mapper.selectTurnover(sdf.format(date)).toString();
-            // 将查询结果写入缓存
-            ops.set(turnover, 10, TimeUnit.SECONDS);
+            synchronized (this){
+                turnover = ops.get();
+                if (turnover == null) {
+                    Date date = new Date();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    turnover = mapper.selectTurnover(sdf.format(date)).toString();
+                    // 将查询结果写入缓存
+                    ops.set(turnover, 10, TimeUnit.SECONDS);
+                }
+            }
         }
+
         return Double.parseDouble(turnover);
     }
 
