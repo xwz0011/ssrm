@@ -10,6 +10,27 @@ spring:
     url: jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Shanghai
     username: root
     password: 123456
+
+  data:
+    # ??redis
+    redis:
+      # ??????
+      host: 192.168.130.131
+      port: 6379
+      #password: 123456
+
+      # ??Sentibnel?????
+      #sentinel:
+        #master: mymaster
+        #nodes: redis:26380,redis:26381,redis:26382
+      # ??Cluster?????
+      #cluster:
+        #nodes: redis:6380, redis:6381, redis:6382, redis:6383, redis:6384, redis:6385
+
+  cache:
+    type: redis
+    cache-names: pc
+
 logging:
   pattern:
     console: level-%-5level - %msg%n

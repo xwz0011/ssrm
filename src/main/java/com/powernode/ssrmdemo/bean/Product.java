@@ -2,8 +2,10 @@ package com.powernode.ssrmdemo.bean;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class Product {
+public class Product implements Serializable {
     private Integer id;
     // 产品名称
     private String name;
